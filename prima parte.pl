@@ -99,6 +99,10 @@ restrictie(cartofi_prajiti, vegan).
 restrictie(supa_crema_ciuperci, vegetarian).
 restrictie(clatite, vegetarian).
 
+
+% Autor:Panainte Bogdan Dumitru (Membrul 2)
+% Descriere: Logica de recomodare
+
 % Predicat auxiliar: Calculează lista și numărul de ingrediente lipsă.
 calculeaza_lipsa(NumeReteta, IngredienteDisponibile, IngredienteLipsa, NumarLipsa) :-
     reteta(NumeReteta, IngredienteNecesare),
@@ -137,7 +141,7 @@ recomanda_reteta_cu_preferinte(IngredienteDisponibile, Categorie, Restrictie) :-
         timp_preparare(RetetaRecomandata, Timp),
         dificultate(RetetaRecomandata, Dificultate),
         
-        nl, write('--- RETETA POTRIVITA ---'), nl,
+        nl, write(' RETETA POTRIVITA '), nl,
         write('Reteta: '), write(RetetaRecomandata), nl,
         write('Timp: '), write(Timp), write(' min | Dificultate: '), write(Dificultate), nl,
         write('Categorie: '), write(Categorie), write(' | Restrictie: '), write(Restrictie), nl,
