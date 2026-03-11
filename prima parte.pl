@@ -98,3 +98,48 @@ restrictie(cartofi_prajiti, vegetarian).
 restrictie(cartofi_prajiti, vegan).
 restrictie(supa_crema_ciuperci, vegetarian).
 restrictie(clatite, vegetarian).
+
+% Predicat auxiliar: Calculează lista și numărul de ingrediente lipsă.
+calculeaza_lipsa(NumeReteta, IngredienteDisponibile, IngredienteLipsa, NumarLipsa) :-
+    reteta(NumeReteta, IngredienteNecesare),
+    subtract(IngredienteNecesare, IngredienteDisponibile, IngredienteLipsa),
+    length(IngredienteLipsa, NumarLipsa).
+
+% Predicat 1: Recomandă rețete prioritizând cele cu cele mai puține lipsuri.
+recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
+    findall(NrLipsa-Reteta, 
+            calculeaza_lipsa(Reteta, IngredienteDisponibile, _, NrLipsa), 
+            ListaNeSortata),
+    keysort(ListaNeSortata, ListaSortata),
+    member(NrLipsa-RetetaRecomandata, ListaSortata),
+    calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
+    
+    nl, write('--- RECOMANDARE ---'), nl,
+    write('Reteta: '), write(RetetaRecomandata), nl,
+    write('Iti lipsesc '), write(NrLipsa), write(' ingrediente: '), write(Lipsa), nl.
+
+% Predicat 2: Recomandă rețete aplicând filtre (Categorie, Restricție).
+recomanda_reteta_cu_preferinte(IngredienteDisponibile, Categorie, Restrictie) :-
+    findall(NrLipsa-Reteta, 
+            (
+                calculeaza_lipsa(Reteta, IngredienteDisponibile, _, NrLipsa),
+                (Categorie == oricare ; categorie(Reteta, Categorie)),
+                (Restrictie == oricare ; restrictie(Reteta, Restrictie))
+            ), 
+            ListaNeSortata),
+    keysort(ListaNeSortata, ListaSortata),
+    
+    ( ListaSortata == [] -> 
+        nl, write('Nu am gasit nicio reteta care sa respecte preferintele tale.'), nl
+    ; 
+        member(Nr-RetetaRecomandata, ListaSortata),
+        calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, Nr),
+        timp_preparare(RetetaRecomandata, Timp),
+        dificultate(RetetaRecomandata, Dificultate),
+        
+        nl, write('--- RETETA POTRIVITA ---'), nl,
+        write('Reteta: '), write(RetetaRecomandata), nl,
+        write('Timp: '), write(Timp), write(' min | Dificultate: '), write(Dificultate), nl,
+        write('Categorie: '), write(Categorie), write(' | Restrictie: '), write(Restrictie), nl,
+        write('Ingrediente lipsa: '), write(Lipsa), nl
+    ).
