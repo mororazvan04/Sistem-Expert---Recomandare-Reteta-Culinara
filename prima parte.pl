@@ -1,6 +1,6 @@
 % SISTEM EXPERT CULINAR
 % Autor: Morosanu Razvan (Membrul 1)
-% Descriere: Definește ingredientele disponibile, rețetele și atributele lor.
+% Descriere: Defineste ingredientele disponibile, retetele si atributele lor.
 
 % 1. INGREDIENTE DISPONIBILE 
 ingredient(rosii). ingredient(castraveti). ingredient(ceapa). 
@@ -16,7 +16,7 @@ ingredient(zahar). ingredient(sare). ingredient(piper).
 ingredient(ulei_masline). ingredient(otet). ingredient(paine). 
 ingredient(pesmet).
 
-% 2. REȚETE ȘI INGREDIENTE NECESARE 
+% 2. RETETE SI INGREDIENTE NECESARE 
 % Format: reteta(Nume, ListaIngrediente)
 reteta(omleta_simpla, [oua, sare, piper, unt]).
 reteta(omleta_cu_branza, [oua, cascaval, unt, sare]).
@@ -34,7 +34,7 @@ reteta(supa_crema_ciuperci, [ciuperci, ceapa, unt, smantana, sare]).
 reteta(snitel_pui, [pui, oua, faina, pesmet, ulei_masline]).
 reteta(clatite, [oua, faina, lapte, unt, zahar]).
 
-% 3. CATEGORIA REȚETEI (mic_dejun, pranz, cina, desert)
+% 3. CATEGORIA RETETEI (mic_dejun, pranz, cina, desert)
 categorie(omleta_simpla, mic_dejun).
 categorie(omleta_cu_branza, mic_dejun).
 categorie(salata_greceasca, pranz).
@@ -51,7 +51,7 @@ categorie(friptura_de_vita, cina).
 categorie(somon_la_gratar, cina).
 categorie(clatite, desert).
 
-% 4. TIMP DE PREPARARE (în minute)
+% 4. TIMP DE PREPARARE (in minute)
 timp_preparare(omleta_simpla, 10).
 timp_preparare(omleta_cu_branza, 12).
 timp_preparare(salata_greceasca, 15).
@@ -85,7 +85,7 @@ dificultate(supa_crema_ciuperci, mediu).
 dificultate(snitel_pui, mediu).
 dificultate(clatite, mediu).
 
-% 6. RESTRICȚII DIETETICE (vegetarian, vegan, fara_gluten etc.)
+% 6. RESTRICTII DIETETICE (vegetarian, vegan, fara_gluten etc.)
 restrictie(omleta_simpla, vegetarian).
 restrictie(omleta_cu_branza, vegetarian).
 restrictie(salata_greceasca, vegetarian).
@@ -100,16 +100,16 @@ restrictie(supa_crema_ciuperci, vegetarian).
 restrictie(clatite, vegetarian).
 
 
-% Autor:Panainte Bogdan Dumitru (Membrul 2)
-% Descriere: Logica de recomodare
+% Autor: Panainte Bogdan Dumitru (Membrul 2)
+% Descriere: Logica de recomandare
 
-% Predicat auxiliar: Calculează lista și numărul de ingrediente lipsă.
+% Predicat auxiliar: Calculeaza lista si numarul de ingrediente lipsa.
 calculeaza_lipsa(NumeReteta, IngredienteDisponibile, IngredienteLipsa, NumarLipsa) :-
     reteta(NumeReteta, IngredienteNecesare),
     subtract(IngredienteNecesare, IngredienteDisponibile, IngredienteLipsa),
     length(IngredienteLipsa, NumarLipsa).
 
-% Predicat 1: Recomandă rețete prioritizând cele cu cele mai puține lipsuri.
+% Predicat 1: Recomanda retete prioritizand cele cu cele mai putine lipsuri.
 recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
     findall(NrLipsa-Reteta, 
             calculeaza_lipsa(Reteta, IngredienteDisponibile, _, NrLipsa), 
@@ -122,7 +122,7 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
     write('Reteta: '), write(RetetaRecomandata), nl,
     write('Iti lipsesc '), write(NrLipsa), write(' ingrediente: '), write(Lipsa), nl.
 
-% Predicat 2: Recomandă rețete aplicând filtre (Categorie, Restricție).
+% Predicat 2: Recomanda retete aplicand filtre (Categorie, Restrictie).
 recomanda_reteta_cu_preferinte(IngredienteDisponibile, Categorie, Restrictie) :-
     findall(NrLipsa-Reteta, 
             (
