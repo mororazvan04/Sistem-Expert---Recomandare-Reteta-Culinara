@@ -130,6 +130,20 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
             ListaNeSortata),
             
     keysort(ListaNeSortata, ListaSortata),
-
+    
+    ( ListaSortata == [] -> 
+        nl, write('! ATENTIE: Nu s-a gasit nicio reteta care sa respecte aceste filtre.'), nl
+    ; 
+        % Cazul de succes: afișare prietenoasă și detaliată
+        member(NrLipsa-RetetaRecomandata, ListaSortata),
+        calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
+        timp_preparare(RetetaRecomandata, Timp),
+        dificultate(RetetaRecomandata, Dif),
+        
+        nl, write('=== RETETA CONFORM PREFERINTELOR ==='), nl,
+        write('Preparat: '), write(RetetaRecomandata), nl,
+        write('Timp de preparare: '), write(Timp), write(' minute | Dificultate: '), write(Dif), nl,
+        write('Ingrediente pe care trebuie sa le cumperi ('), write(NrLipsa), write('): '), write(Lipsa), nl
+    ).
 
 
