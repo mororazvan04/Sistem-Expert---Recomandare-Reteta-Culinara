@@ -96,5 +96,21 @@ calculeaza_lipsa(NumeReteta, IngredienteDisponibile, IngredienteLipsa, NumarLips
     subtract(IngredienteNecesare, IngredienteDisponibile, IngredienteLipsa),
     length(IngredienteLipsa, NumarLipsa).
 
+recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
+    % Găsim toate rețetele și calculăm lipsurile, creând o listă de perechi NrLipsa-Reteta
+    findall(NrLipsa-Reteta, 
+            calculeaza_lipsa(Reteta, IngredienteDisponibile, _, NrLipsa), 
+            ListaNeSortata),
+    
+    % keysort ordonează lista crescător după prima valoare (NrLipsa)
+    keysort(ListaNeSortata, ListaSortata),
+    
+    % Extragem rețetele pe rând. Dacă utilizatorul cere o nouă soluție,
+    % backtracking-ul va continua corect de aici.
+    member(NrLipsa-RetetaRecomandata, ListaSortata),
+    
+    % Recalculăm lipsa specifică pentru a o afișa
+    calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
+
 
 
