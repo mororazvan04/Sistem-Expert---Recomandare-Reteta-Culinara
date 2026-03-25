@@ -111,6 +111,11 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
     
     % Recalculăm lipsa specifică pentru a o afișa
     calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
+    %Afisarea
+    nl, write('=== RECOMANDARE ==='), nl,
+    write('Reteta: '), write(RetetaRecomandata), nl,
+    write('Numar ingrediente lipsa: '), write(NrLipsa), nl,
+    write('Trebuie sa mai adaugi: '), write(Lipsa), nl.
 
 
 
