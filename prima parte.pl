@@ -25,3 +25,21 @@ reteta(cartofi_prajiti, [cartofi, ulei_masline, sare]).
 reteta(supa_crema_ciuperci, [ciuperci, ceapa, unt, smantana, sare]).
 reteta(snitel_pui, [pui, oua, faina, pesmet, ulei_masline]).
 reteta(clatite, [oua, faina, lapte, unt, zahar]).
+
+% 3. Categorie (mic dejun, pranz, cina, desert)
+categorie(omleta_simpla, mic_dejun).
+categorie(omleta_cu_branza, mic_dejun).
+categorie(salata_greceasca, pranz).
+categorie(salata_de_vara, pranz).
+categorie(paste_carbonara, cina).
+categorie(paste_cu_sos_rosii, cina).
+categorie(pui_la_cuptor, pranz).
+categorie(pui_cu_ciuperci, pranz).
+categorie(friptura_de_vita, cina).
+categorie(somon_la_gratar, cina).
+categorie(orez_cu_legume, pranz).
+categorie(cartofi_prajiti, pranz).
+categorie(supa_crema_ciuperci, pranz).
+categorie(snitel_pui, pranz).
+categorie(clatite, desert).
+
