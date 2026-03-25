@@ -89,3 +89,12 @@ restrictie(cartofi_prajiti, vegetarian).
 restrictie(cartofi_prajiti, vegan).
 restrictie(supa_crema_ciuperci, vegetarian).
 restrictie(clatite, vegetarian).
+
+% Predicat ce calculeaza cate si ce ingrediente ne lipsesc pentru realizarea retetei
+calculeaza_lipsa(NumeReteta, IngredienteDisponibile, IngredienteLipsa, NumarLipsa) :-
+    reteta(NumeReteta, IngredienteNecesare),
+    subtract(IngredienteNecesare, IngredienteDisponibile, IngredienteLipsa),
+    length(IngredienteLipsa, NumarLipsa).
+
+
+
