@@ -60,7 +60,7 @@ timp_preparare(supa_crema_ciuperci, 35).
 timp_preparare(snitel_pui, 25).
 timp_preparare(clatite, 30).
 
-% 5. Dificultate 
+%  5. Dificultate 
 dificultate(omleta_simpla, usor).
 dificultate(omleta_cu_branza, usor).
 dificultate(salata_greceasca, usor).
@@ -76,4 +76,16 @@ dificultate(cartofi_prajiti, usor).
 dificultate(supa_crema_ciuperci, mediu).
 dificultate(snitel_pui, mediu).
 dificultate(clatite, mediu).
-
+%  6. Restricții alimentare
+restrictie(omleta_simpla, vegetarian).
+restrictie(omleta_cu_branza, vegetarian).
+restrictie(salata_greceasca, vegetarian).
+restrictie(salata_de_vara, vegetarian).
+restrictie(salata_de_vara, vegan).
+restrictie(paste_cu_sos_rosii, vegetarian).
+restrictie(orez_cu_legume, vegetarian).
+restrictie(orez_cu_legume, vegan).
+restrictie(cartofi_prajiti, vegetarian).
+restrictie(cartofi_prajiti, vegan).
+restrictie(supa_crema_ciuperci, vegetarian).
+restrictie(clatite, vegetarian).
