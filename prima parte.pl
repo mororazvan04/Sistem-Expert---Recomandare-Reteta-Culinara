@@ -116,6 +116,20 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
     write('Reteta: '), write(RetetaRecomandata), nl,
     write('Numar ingrediente lipsa: '), write(NrLipsa), nl,
     write('Trebuie sa mai adaugi: '), write(Lipsa), nl.
+    
+    %cazuri speciale
+    recomanda_reteta_cu_preferinte(IngredienteDisponibile, Categorie, Restrictie) :-
+    findall(NrLipsa-Reteta, 
+            (
+                calculeaza_lipsa(Reteta, IngredienteDisponibile, _, NrLipsa),
+                % Verificăm preferința pentru categorie
+                (Categorie == oricare ; categorie(Reteta, Categorie)),
+                % Verificăm preferința pentru restricția alimentară
+                (Restrictie == oricare ; restrictie(Reteta, Restrictie))
+            ), 
+            ListaNeSortata),
+            
+    keysort(ListaNeSortata, ListaSortata),
 
 
 
