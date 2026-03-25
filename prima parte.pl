@@ -43,3 +43,37 @@ categorie(supa_crema_ciuperci, pranz).
 categorie(snitel_pui, pranz).
 categorie(clatite, desert).
 
+% 4. Timp de preparare (în minute) 
+timp_preparare(omleta_simpla, 10).
+timp_preparare(omleta_cu_branza, 12).
+timp_preparare(salata_greceasca, 15).
+timp_preparare(salata_de_vara, 10).
+timp_preparare(paste_carbonara, 20).
+timp_preparare(paste_cu_sos_rosii, 25).
+timp_preparare(pui_la_cuptor, 60).
+timp_preparare(pui_cu_ciuperci, 30).
+timp_preparare(friptura_de_vita, 40).
+timp_preparare(somon_la_gratar, 20).
+timp_preparare(orez_cu_legume, 30).
+timp_preparare(cartofi_prajiti, 25).
+timp_preparare(supa_crema_ciuperci, 35).
+timp_preparare(snitel_pui, 25).
+timp_preparare(clatite, 30).
+
+% 5. Dificultate 
+dificultate(omleta_simpla, usor).
+dificultate(omleta_cu_branza, usor).
+dificultate(salata_greceasca, usor).
+dificultate(salata_de_vara, usor).
+dificultate(paste_carbonara, mediu).
+dificultate(paste_cu_sos_rosii, usor).
+dificultate(pui_la_cuptor, mediu).
+dificultate(pui_cu_ciuperci, mediu).
+dificultate(friptura_de_vita, greu).
+dificultate(somon_la_gratar, usor).
+dificultate(orez_cu_legume, usor).
+dificultate(cartofi_prajiti, usor).
+dificultate(supa_crema_ciuperci, mediu).
+dificultate(snitel_pui, mediu).
+dificultate(clatite, mediu).
+
