@@ -146,4 +146,26 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
         write('Ingrediente pe care trebuie sa le cumperi ('), write(NrLipsa), write('): '), write(Lipsa), nl
     ).
 
+    %Restrictii
+recomanda_fara_ingrediente(IngredienteDisponibile, IngredienteNedorite) :-
+    findall(NrLipsa-Reteta, 
+            (
+                reteta(Reteta, IngredienteNecesare),
+                intersection(IngredienteNedorite, IngredienteNecesare, []),
+                calculeaza_lipsa(Reteta, IngredienteDisponibile, _, NrLipsa)
+            ), 
+            ListaNeSortata),
+            
+    keysort(ListaNeSortata, ListaSortata),
+    
+    ( ListaSortata == [] -> 
+        nl, write('! ATENTIE: Nu s-a gasit nicio reteta care sa nu contina acele ingrediente.'), nl
+    ; 
+        member(NrLipsa-RetetaRecomandata, ListaSortata),
+        calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
+        
+        nl, write('=== RECOMANDARE (FARA INGREDIENTELE NEDORITE) ==='), nl,
+        write('Preparat: '), write(RetetaRecomandata), nl,
+        write('Ingrediente pe care trebuie sa le cumperi ('), write(NrLipsa), write('): '), write(Lipsa), nl
+    ).
 
