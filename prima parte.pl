@@ -1,4 +1,5 @@
-%  1. Definiția ingredientelor (35 ingrediente)
+% 1.Baza de cunostinte 
+%  1.1 Lista cu toate ingredientele pe care le recunoaste sistemul nostru (35 de ingrediente)
 ingredient(rosii). ingredient(castraveti). ingredient(ceapa). ingredient(usturoi).
 ingredient(ardei). ingredient(cartofi). ingredient(morcovi). ingredient(ciuperci).
 ingredient(salata). ingredient(spanac). ingredient(mere). ingredient(lamai).
@@ -9,7 +10,7 @@ ingredient(faina). ingredient(zahar). ingredient(sare). ingredient(piper).
 ingredient(ulei_masline). ingredient(otet). ingredient(paine). ingredient(pesmet).
 ingredient(masline). ingredient(busuioc). ingredient(ton).
 
-%  2. Rețete și ingredientele necesare (15 rețete) 
+%  1.2 Rețetele și ingredientele necesare (15 rețete) 
 reteta(omleta_simpla, [oua, sare, piper, unt]).
 reteta(omleta_cu_branza, [oua, cascaval, unt, sare]).
 reteta(salata_greceasca, [rosii, castraveti, ceapa, masline, branza_feta, ulei_masline, sare]).
@@ -26,7 +27,7 @@ reteta(supa_crema_ciuperci, [ciuperci, ceapa, unt, smantana, sare]).
 reteta(snitel_pui, [pui, oua, faina, pesmet, ulei_masline]).
 reteta(clatite, [oua, faina, lapte, unt, zahar]).
 
-% 3. Categorie (mic dejun, pranz, cina, desert)
+% 1.3 Clasificarea retetelor pe mesele zilei.
 categorie(omleta_simpla, mic_dejun).
 categorie(omleta_cu_branza, mic_dejun).
 categorie(salata_greceasca, pranz).
@@ -43,7 +44,7 @@ categorie(supa_crema_ciuperci, pranz).
 categorie(snitel_pui, pranz).
 categorie(clatite, desert).
 
-% 4. Timp de preparare (în minute) 
+% 1.4 Timpul estimat pentru fiecare preparat. (in minute)
 timp_preparare(omleta_simpla, 10).
 timp_preparare(omleta_cu_branza, 12).
 timp_preparare(salata_greceasca, 15).
@@ -60,7 +61,7 @@ timp_preparare(supa_crema_ciuperci, 35).
 timp_preparare(snitel_pui, 25).
 timp_preparare(clatite, 30).
 
-%  5. Dificultate 
+%  1.5 Nivelul de dificultate al fiecarei retete. 
 dificultate(omleta_simpla, usor).
 dificultate(omleta_cu_branza, usor).
 dificultate(salata_greceasca, usor).
@@ -76,7 +77,8 @@ dificultate(cartofi_prajiti, usor).
 dificultate(supa_crema_ciuperci, mediu).
 dificultate(snitel_pui, mediu).
 dificultate(clatite, mediu).
-%  6. Restricții alimentare
+
+%  1.6 Restricții alimentare
 restrictie(omleta_simpla, vegetarian).
 restrictie(omleta_cu_branza, vegetarian).
 restrictie(salata_greceasca, vegetarian).
@@ -90,12 +92,17 @@ restrictie(cartofi_prajiti, vegan).
 restrictie(supa_crema_ciuperci, vegetarian).
 restrictie(clatite, vegetarian).
 
+% 2.Logica de functionare si predicatele. 
 % Predicat ce calculeaza cate si ce ingrediente ne lipsesc pentru realizarea retetei
+
 calculeaza_lipsa(NumeReteta, IngredienteDisponibile, IngredienteLipsa, NumarLipsa) :-
-    reteta(NumeReteta, IngredienteNecesare),
+% Cautam in baza de date ce ingrediente cere reteta asta.
+    reteta(NumeReteta, IngredienteNecesare),   
+% Luam ce cere reteta si scoatem din ea ce avem deja in frigider. Salvam restul in 'IngredienteLipsa'.
     subtract(IngredienteNecesare, IngredienteDisponibile, IngredienteLipsa),
     length(IngredienteLipsa, NumarLipsa).
 
+% Predicatul de baza care ne recomanda orice reteta, in ordinea eficientei.
 recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
     % Găsim toate rețetele și calculăm lipsurile, creând o listă de perechi NrLipsa-Reteta
     findall(NrLipsa-Reteta, 
@@ -105,11 +112,10 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
     % keysort ordonează lista crescător după prima valoare (NrLipsa)
     keysort(ListaNeSortata, ListaSortata),
     
-    % Extragem rețetele pe rând. Dacă utilizatorul cere o nouă soluție,
-    % backtracking-ul va continua corect de aici.
+    % Extragem rețetele pe rând. Dacă utilizatorul cere o nouă soluție, are loc backtracking-ul
     member(NrLipsa-RetetaRecomandata, ListaSortata),
     
-    % Recalculăm lipsa specifică pentru a o afișa
+    % Recalculăm ingredientele lipsa.
     calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
     %Afisarea
     nl, write('=== RECOMANDARE ==='), nl,
@@ -117,7 +123,7 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
     write('Numar ingrediente lipsa: '), write(NrLipsa), nl,
     write('Trebuie sa mai adaugi: '), write(Lipsa), nl.
     
-    %cazuri speciale
+    %Predicatul cu filtre in care aplicam categoriile (pranz, cina, mic-dejun) si restrictiile (vegetarian).
     recomanda_reteta_cu_preferinte(IngredienteDisponibile, Categorie, Restrictie) :-
     findall(NrLipsa-Reteta, 
             (
@@ -130,11 +136,11 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
             ListaNeSortata),
             
     keysort(ListaNeSortata, ListaSortata),
-    
+    % Daca lista rezultata e goala, il anuntam pe utilizator.
     ( ListaSortata == [] -> 
         nl, write('! ATENTIE: Nu s-a gasit nicio reteta care sa respecte aceste filtre.'), nl
     ; 
-        % Cazul de succes: afișare prietenoasă și detaliată
+        % Cazul de succes cu afișare prietenoasă și detaliată
         member(NrLipsa-RetetaRecomandata, ListaSortata),
         calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
         timp_preparare(RetetaRecomandata, Timp),
@@ -146,24 +152,28 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
         write('Ingrediente pe care trebuie sa le cumperi ('), write(NrLipsa), write('): '), write(Lipsa), nl
     ).
 
-    %Restrictii
+    %Predicatul pentru restrictii alimentare in care se exclud anumite ingrediente
 recomanda_fara_ingrediente(IngredienteDisponibile, IngredienteNedorite) :-
+% Adunam optiunile care ne convin.
     findall(NrLipsa-Reteta, 
             (
+                % Tragem ingredientele fiecarei retete.
                 reteta(Reteta, IngredienteNecesare),
+                % Daca intersectia dintre "ce nu suport" si "ce are reteta" e lista goala inseamna ca reteta e curata si conditia este adevarata. Trece mai departe!
                 intersection(IngredienteNedorite, IngredienteNecesare, []),
                 calculeaza_lipsa(Reteta, IngredienteDisponibile, _, NrLipsa)
             ), 
             ListaNeSortata),
-            
+    % Sortam dupa cele mai putine ingrediente lipsa.  
     keysort(ListaNeSortata, ListaSortata),
     
     ( ListaSortata == [] -> 
         nl, write('! ATENTIE: Nu s-a gasit nicio reteta care sa nu contina acele ingrediente.'), nl
-    ; 
+    ;  
+        % Extragem prima solutie valida.
         member(NrLipsa-RetetaRecomandata, ListaSortata),
         calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
-        
+        % Afisarea
         nl, write('=== RECOMANDARE (FARA INGREDIENTELE NEDORITE) ==='), nl,
         write('Preparat: '), write(RetetaRecomandata), nl,
         write('Ingrediente pe care trebuie sa le cumperi ('), write(NrLipsa), write('): '), write(Lipsa), nl
