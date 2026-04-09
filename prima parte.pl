@@ -92,13 +92,14 @@ restrictie(cartofi_prajiti, vegan).
 restrictie(supa_crema_ciuperci, vegetarian).
 restrictie(clatite, vegetarian).
 
+
 % 2.Logica de functionare si predicatele. 
 % Predicat ce calculeaza cate si ce ingrediente ne lipsesc pentru realizarea retetei
 
 calculeaza_lipsa(NumeReteta, IngredienteDisponibile, IngredienteLipsa, NumarLipsa) :-
-% Cautam in baza de date ce ingrediente cere reteta asta.
+    % Cautam in baza de date ce ingrediente cere reteta asta.
     reteta(NumeReteta, IngredienteNecesare),   
-% Luam ce cere reteta si scoatem din ea ce avem deja in frigider. Salvam restul in 'IngredienteLipsa'.
+    % Luam ce cere reteta si scoatem din ea ce avem deja in frigider. Salvam restul in 'IngredienteLipsa'.
     subtract(IngredienteNecesare, IngredienteDisponibile, IngredienteLipsa),
     length(IngredienteLipsa, NumarLipsa).
 
@@ -123,8 +124,8 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
     write('Numar ingrediente lipsa: '), write(NrLipsa), nl,
     write('Trebuie sa mai adaugi: '), write(Lipsa), nl.
     
-    %Predicatul cu filtre in care aplicam categoriile (pranz, cina, mic-dejun) si restrictiile (vegetarian).
-    recomanda_reteta_cu_preferinte(IngredienteDisponibile, Categorie, Restrictie) :-
+%Predicatul cu filtre in care aplicam categoriile (pranz, cina, mic-dejun) si restrictiile (vegetarian).
+recomanda_reteta_cu_preferinte(IngredienteDisponibile, Categorie, Restrictie) :-
     findall(NrLipsa-Reteta, 
             (
                 calculeaza_lipsa(Reteta, IngredienteDisponibile, _, NrLipsa),
@@ -152,9 +153,9 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
         write('Ingrediente pe care trebuie sa le cumperi ('), write(NrLipsa), write('): '), write(Lipsa), nl
     ).
 
-    %Predicatul pentru restrictii alimentare in care se exclud anumite ingrediente
+%Predicatul pentru restrictii alimentare in care se exclud anumite ingrediente
 recomanda_fara_ingrediente(IngredienteDisponibile, IngredienteNedorite) :-
-% Adunam optiunile care ne convin.
+    % Adunam optiunile care ne convin.
     findall(NrLipsa-Reteta, 
             (
                 % Tragem ingredientele fiecarei retete.
@@ -168,8 +169,8 @@ recomanda_fara_ingrediente(IngredienteDisponibile, IngredienteNedorite) :-
     keysort(ListaNeSortata, ListaSortata),
     
     ( ListaSortata == [] -> 
-        nl, write('! ATENTIE: Nu s-a gasit nicio reteta care sa nu contina acele ingrediente.'), nl;  
-        
+        nl, write('! ATENTIE: Nu s-a gasit nicio reteta care sa nu contina acele ingrediente.'), nl
+    ;  
         % Extragem prima solutie valida.
         member(NrLipsa-RetetaRecomandata, ListaSortata),
         calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
@@ -179,4 +180,3 @@ recomanda_fara_ingrediente(IngredienteDisponibile, IngredienteNedorite) :-
         write('Preparat: '), write(RetetaRecomandata), nl,
         write('Ingrediente pe care trebuie sa le cumperi ('), write(NrLipsa), write('): '), write(Lipsa), nl
     ).
-
