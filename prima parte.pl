@@ -124,35 +124,41 @@ recomanda_reteta(IngredienteDisponibile, RetetaRecomandata) :-
     write('Numar ingrediente lipsa: '), write(NrLipsa), nl,
     write('Trebuie sa mai adaugi: '), write(Lipsa), nl.
     
-%Predicatul cu filtre in care aplicam categoriile (pranz, cina, mic-dejun) si restrictiile (vegetarian).
-recomanda_reteta_cu_preferinte(IngredienteDisponibile, Categorie, Restrictie) :-
+%Predicatul cu filtre in care aplicam categoriile (pranz, cina, mic-dejun), restrictiile (vegetarian), timp si dificultate.
+recomanda_reteta_cu_preferinte(IngredienteDisponibile, Categorie, Restrictie, TimpMax, DificultateDorita) :-
     findall(NrLipsa-Reteta, 
             (
                 calculeaza_lipsa(Reteta, IngredienteDisponibile, _, NrLipsa),
                 % Verificăm preferința pentru categorie
                 (Categorie == oricare ; categorie(Reteta, Categorie)),
                 % Verificăm preferința pentru restricția alimentară
-                (Restrictie == oricare ; restrictie(Reteta, Restrictie))
+                (Restrictie == oricare ; restrictie(Reteta, Restrictie)),
+                % Tragem timpul și verificăm dacă ne încadrăm în el
+                timp_preparare(Reteta, Timp),
+                (TimpMax == oricare ; Timp =< TimpMax),
+                % Tragem dificultatea și o verificăm
+                dificultate(Reteta, Dif),
+                (DificultateDorita == oricare ; Dif == DificultateDorita)
             ), 
             ListaNeSortata),
             
     keysort(ListaNeSortata, ListaSortata),
+    
     % Daca lista rezultata e goala, il anuntam pe utilizator.
     ( ListaSortata == [] -> 
-        nl, write('! ATENTIE: Nu s-a gasit nicio reteta care sa respecte aceste filtre.'), nl
+        nl, write('! ATENTIE: Nu s-a gasit nicio reteta care sa respecte toate aceste filtre.'), nl
     ; 
-        % Cazul de succes cu afișare prietenoasă și detaliată
+        % Cazul de succes cu afișare
         member(NrLipsa-RetetaRecomandata, ListaSortata),
         calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
-        timp_preparare(RetetaRecomandata, Timp),
-        dificultate(RetetaRecomandata, Dif),
+        timp_preparare(RetetaRecomandata, TimpFinal),
+        dificultate(RetetaRecomandata, DifFinal),
         
         nl, write('=== RETETA CONFORM PREFERINTELOR ==='), nl,
         write('Preparat: '), write(RetetaRecomandata), nl,
-        write('Timp de preparare: '), write(Timp), write(' minute | Dificultate: '), write(Dif), nl,
+        write('Timp de preparare: '), write(TimpFinal), write(' minute | Dificultate: '), write(DifFinal), nl,
         write('Ingrediente pe care trebuie sa le cumperi ('), write(NrLipsa), write('): '), write(Lipsa), nl
     ).
-
 %Predicatul pentru restrictii alimentare in care se exclud anumite ingrediente
 recomanda_fara_ingrediente(IngredienteDisponibile, IngredienteNedorite) :-
     % Adunam optiunile care ne convin.
