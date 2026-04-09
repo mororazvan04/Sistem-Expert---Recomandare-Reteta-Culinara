@@ -168,11 +168,12 @@ recomanda_fara_ingrediente(IngredienteDisponibile, IngredienteNedorite) :-
     keysort(ListaNeSortata, ListaSortata),
     
     ( ListaSortata == [] -> 
-        nl, write('! ATENTIE: Nu s-a gasit nicio reteta care sa nu contina acele ingrediente.'), nl
-    ;  
+        nl, write('! ATENTIE: Nu s-a gasit nicio reteta care sa nu contina acele ingrediente.'), nl;  
+        
         % Extragem prima solutie valida.
         member(NrLipsa-RetetaRecomandata, ListaSortata),
         calculeaza_lipsa(RetetaRecomandata, IngredienteDisponibile, Lipsa, NrLipsa),
+        
         % Afisarea
         nl, write('=== RECOMANDARE (FARA INGREDIENTELE NEDORITE) ==='), nl,
         write('Preparat: '), write(RetetaRecomandata), nl,
