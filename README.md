@@ -33,7 +33,19 @@ Sistemul permite interogări complexe prin intermediul următoarelor predicate:
 
 ---
 
-## 3. Exemple de Validare (Teste)
+## 3. Ghid de Utilizare (Platforma SWISH)
+
+Proiectul este conceput pentru a fi rulat interactiv direct în browser, **fără a necesita instalarea vreunui software local**, folosind mediul SWISH.
+
+Pentru evaluare și testare:
+1. Accesați [swish.swi-prolog.org](https://swish.swi-prolog.org/) și creați un Notebook nou (`File > New > Notebook`).
+2. Adăugați o celulă de tip **Program** și inserați codul sursă din `prima_parte.pl`.
+3. Adăugați celule de tip **Query** pentru fiecare interogare de testare pe care doriți să o rulați (ex: `recomanda_reteta([oua, sare, unt], Reteta).`).
+4. Executați interogările apăsând butonul albastru de rulare (Play) asociat fiecărei celule Query. Pentru a declanșa backtracking-ul și a cere sistemului următoarea recomandare, utilizați butonul **"Next"**.
+
+---
+
+## 4. Exemple de Validare (Teste)
 
 Sistemul a fost validat prin scenarii de testare ce acoperă cazuri ideale, cazuri cu filtre multiple și cazuri limită (fără soluții disponibile). Log-ul detaliat al acestor teste se regăsește în directorul `/teste`.
 
@@ -42,7 +54,7 @@ Exemplu de interogare pentru excluderea alergenilor:
 
 ---
 
-## 4. Structura Repository-ului
+## 5. Structura Repository-ului
 * `/cod` - Fișierul sursă principal (`prima_parte.pl`).
 * `/doc` - Manualul tehnic și detaliile arhitecturale.
 * `/teste` - Raportul de testare (`teste_rezolvate.txt`) și capturi de ecran din consolă.
