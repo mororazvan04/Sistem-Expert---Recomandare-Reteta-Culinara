@@ -1,46 +1,48 @@
-# Sistem Expert: Recomandare Rețetă Culinară
-**Proiect Prolog - Tema 7**
+# Sistem Expert pentru Recomandări Culinare
+**Proiect Inteligență Artificială - Tema 7**
 
-Acest repository conține implementarea unui sistem expert în Prolog, conceput pentru a rezolva o problemă zilnică: *"Ce pot să gătesc astăzi folosind doar ingredientele pe care le am deja în frigider?"*. 
-
-Scopul aplicației este optimizarea resurselor alimentare, minimizarea risipei și oferirea de opțiuni personalizate în funcție de stilul de viață al utilizatorului (ex: diete vegane, timp limitat, excluderea alergenilor).
+Acest proiect implementează un sistem expert bazat pe reguli în limbajul Prolog, destinat optimizării procesului de selecție a rețetelor culinare în funcție de resursele disponibile. Sistemul evaluează un inventar de ingrediente și oferă soluții personalizate, prioritizând rețetele care necesită cele mai puține achiziții suplimentare.
 
 ---
 
-## Arhitectura Sistemului
+## 1. Arhitectura și Modelarea Datelor
 
-Codul nostru (disponibil în `prima_parte.pl`) este împărțit în două secțiuni logice clare:
+Aplicația este structurată pentru a separa baza de fapte de logica de inferență, asigurând o mentenanță ușoară și posibilitatea de extindere a bazei de date.
 
-### 1. Baza de Cunoștințe (Faptele)
-Am modelat universul culinar definind o bază de date complexă, care depășește cerințele minime ale temei:
-* **35 de ingrediente** de bază.
-* **15 rețete** detaliate, fiecare cu lista sa strictă de ingrediente.
-* **Metadate extinse pentru fiecare rețetă:**
-  * Momentul zilei (mic dejun, prânz, cină, desert).
-  * Timpul de preparare (în minute).
-  * Nivelul de dificultate (ușor, mediu, greu).
-  * Restricții alimentare (vegetarian, vegan).
+### 1.1 Baza de Cunoștințe
+Faptele sunt organizate ierarhic pentru a acoperi toate dimensiunile unui preparat culinar:
+* **Ingrediente:** 35 de entități atomice care definesc vocabularul sistemului.
+* **Rețete:** 15 structuri complexe ce asociază un identificator de preparat cu o listă de necesități.
+* **Atribute (Metadate):** Fiecare rețetă este mapată către categorii (mic dejun, prânz, cină, desert), timp de execuție, nivel de dificultate și restricții dietetice (vegan, vegetarian).
 
-### 2. Motorul de Inferență (Logica)
-Folosind concepte specifice programării logice (manipularea listelor, funcții de ordin superior precum `findall` și `keysort`, intersecții și diferențe de mulțimi), am creat un sistem care nu doar găsește rețete, ci le **prioritizează** pe cele care necesită cele mai puține ingrediente suplimentare.
-
----
-
-## Funcționalități și Predicate Principale
-
-Sistemul pune la dispoziția utilizatorului trei moduri principale de interacțiune:
-
-### A. Recomandarea de bază
-`recomanda_reteta(IngredienteDisponibile, RetetaRecomandata)`
-Compară ce ai în stoc cu ce cer rețetele și îți sugerează preparatele în ordinea eficienței (cele cu 0 lipsuri apar primele, urmate de cele cu 1 lipsă, etc.).
-
-### B. Căutarea Avansată (Filtre complete)
-`recomanda_reteta_cu_preferinte(Ingrediente, Categorie, Restrictie, TimpMax, Dificultate)`
-Acesta este filtrul suprem. Pe lângă stocul de ingrediente, sistemul ține cont de: momentul zilei, dietă, timpul maxim în care vrei să termini de gătit și cât de complicată vrei să fie rețeta. Dacă nu ai o preferință pentru un anumit parametru, poți scrie `oricare`.
-
-### C. Modul "Fără Alergeni" (Excluderi)
-`recomanda_fara_ingrediente(IngredienteDisponibile, IngredienteNedorite)`
-Elimină automat din căutare orice rețetă care conține ingrediente din lista neagră (ex: alergii la lactoză, meniu fără carne etc.), folosind funcția de intersecție a listelor.
+### 1.2 Logica de Inferență
+Sistemul utilizează mecanisme avansate de programare logică pentru procesarea cererilor:
+* **Diferența de Mulțimi:** Utilizată pentru a identifica disparitatea dintre necesarul unei rețete și stocul utilizatorului.
+* **Agregarea Soluțiilor:** Predicatul `findall/3` colectează toate rețetele valide pentru a permite compararea acestora.
+* **Ordonarea prin Tehnica Key-Sort:** Soluțiile sunt sortate după criteriul eficienței (numărul minim de ingrediente lipsă), oferind utilizatorului cea mai accesibilă cale către finalizarea unui preparat.
 
 ---
 
+## 2. Funcționalități Implementate
+
+Sistemul permite interogări complexe prin intermediul următoarelor predicate:
+
+1.  **Recomandare Optimizată (`recomanda_reteta/2`):** Identifică și ierarhizează rețetele pe baza stocului actual.
+2.  **Filtrare Multicriterială (`recomanda_reteta_cu_preferinte/5`):** Permite utilizatorului să impună constrângeri de timp, dificultate și regim alimentar. Parametrul `oricare` oferă flexibilitate totală în căutare.
+3.  **Gestionarea Restricțiilor Negative (`recomanda_fara_ingrediente/2`):** Esențial pentru utilizatorii cu alergii sau preferințe stricte de excludere (ex: meniu fără carne sau fără lactoză).
+
+---
+
+## 3. Exemple de Validare (Teste)
+
+Sistemul a fost validat prin scenarii de testare ce acoperă cazuri ideale, cazuri cu filtre multiple și cazuri limită (fără soluții disponibile). Log-ul detaliat al acestor teste se regăsește în directorul `/teste`.
+
+Exemplu de interogare pentru excluderea alergenilor:
+`?- recomanda_fara_ingrediente([paste, rosii], [carne, oua]).`
+
+---
+
+## 4. Structura Repository-ului
+* `/cod` - Fișierul sursă principal (`prima_parte.pl`).
+* `/doc` - Manualul tehnic și detaliile arhitecturale.
+* `/teste` - Raportul de testare (`teste_rezolvate.txt`) și capturi de ecran din consolă.
