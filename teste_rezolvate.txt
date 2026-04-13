@@ -1,0 +1,205 @@
+========================================================================
+RAPORT FINAL DE TESTARE - SISTEM EXPERT RECOMANDARE REȚETE
+Membru 3 Neculcea Sabin: Testare
+Data: 13.04.2026
+========================================================================
+
+--- TEST 1: Recomandare bazată pe un stoc bogat (Mic Dejun) ---
+Interogare: ?- recomanda_reteta([oua, sare, piper, unt], Reteta).
+
+=== RECOMANDARE ===
+Reteta: omleta_simpla
+Numar ingrediente lipsa: 0
+Trebuie sa mai adaugi: []
+Reteta = omleta_simpla
+
+=== RECOMANDARE ===
+Reteta: omleta_cu_branza
+Numar ingrediente lipsa: 1
+Trebuie sa mai adaugi: [cascaval]
+Reteta = omleta_cu_branza
+
+=== RECOMANDARE ===
+Reteta: friptura_de_vita
+Numar ingrediente lipsa: 2
+Trebuie sa mai adaugi: [vita, usturoi]
+Reteta = friptura_de_vita
+
+=== RECOMANDARE ===
+Reteta: cartofi_prajiti
+Numar ingrediente lipsa: 2
+Trebuie sa mai adaugi: [cartofi, ulei_masline]
+Reteta = cartofi_prajiti
+
+=== RECOMANDARE ===
+Reteta: paste_carbonara
+Numar ingrediente lipsa: 3
+Trebuie sa mai adaugi: [paste, porc, cascaval]
+Reteta = paste_carbonara
+
+=== RECOMANDARE ===
+Reteta: somon_la_gratar
+Numar ingrediente lipsa: 3
+Trebuie sa mai adaugi: [somon, lamai, ulei_masline]
+Reteta = somon_la_gratar
+
+--- TEST 2: Recomandare complexă (Pui și Cartofi) ---
+Interogare: ?- recomanda_reteta([pui, cartofi, usturoi, sare], Reteta).
+
+
+=== RECOMANDARE ===
+Reteta: cartofi_prajiti
+Numar ingrediente lipsa: 1
+Trebuie sa mai adaugi: [ulei_masline]
+Reteta = cartofi_prajiti
+
+=== RECOMANDARE ===
+Reteta: pui_la_cuptor
+Numar ingrediente lipsa: 2
+Trebuie sa mai adaugi: [ulei_masline, piper]
+Reteta = pui_la_cuptor
+
+=== RECOMANDARE ===
+Reteta: omleta_simpla
+Numar ingrediente lipsa: 3
+Trebuie sa mai adaugi: [oua, piper, unt]
+Reteta = omleta_simpla
+
+=== RECOMANDARE ===
+Reteta: omleta_cu_branza
+Numar ingrediente lipsa: 3
+Trebuie sa mai adaugi: [oua, cascaval, unt]
+Reteta = omleta_cu_branza
+
+=== RECOMANDARE ===
+Reteta: pui_cu_ciuperci
+Numar ingrediente lipsa: 3
+Trebuie sa mai adaugi: [ciuperci, smantana, unt]
+Reteta = pui_cu_ciuperci
+
+=== RECOMANDARE ===
+Reteta: friptura_de_vita
+Numar ingrediente lipsa: 3
+Trebuie sa mai adaugi: [vita, unt, piper]
+Reteta = friptura_de_vita
+
+=== RECOMANDARE ===
+Reteta: somon_la_gratar
+Numar ingrediente lipsa: 3
+Trebuie sa mai adaugi: [somon, lamai, ulei_masline]
+Reteta = somon_la_gratar
+
+
+--- TEST 3: Filtrare după categorie (Cină) ---
+Interogare: ?- recomanda_reteta_cu_preferinte([vita, unt, cartofi], cina, oricare, 60, oricare).
+
+=== RETETA CONFORM PREFERINTELOR ===
+Preparat: friptura_de_vita
+Timp de preparare: 40 minute | Dificultate: greu
+Ingrediente pe care trebuie sa le cumperi (3): [usturoi, sare, piper]
+1true
+
+=== RETETA CONFORM PREFERINTELOR ===
+Preparat: somon_la_gratar
+Timp de preparare: 20 minute | Dificultate: usor
+Ingrediente pe care trebuie sa le cumperi (4): [somon, lamai, ulei_masline, sare]
+2true
+
+=== RETETA CONFORM PREFERINTELOR ===
+Preparat: paste_carbonara
+Timp de preparare: 20 minute | Dificultate: mediu
+Ingrediente pe care trebuie sa le cumperi (5): [paste, porc, oua, cascaval, piper]
+3true
+
+=== RETETA CONFORM PREFERINTELOR ===
+Preparat: paste_cu_sos_rosii
+Timp de preparare: 25 minute | Dificultate: usor
+Ingrediente pe care trebuie sa le cumperi (6): [paste, rosii, usturoi, ulei_masline, busuioc, sare]
+4true
+
+--- TEST 4: Filtrare strictă (Prânz Vegan) ---
+Interogare: ?- recomanda_reteta_cu_preferinte([rosii, castraveti, ardei], pranz, vegan, 30, oricare).
+
+=== RETETA CONFORM PREFERINTELOR ===
+Preparat: salata_de_vara
+Timp de preparare: 10 minute | Dificultate: usor
+Ingrediente pe care trebuie sa le cumperi (2): [ulei_masline, otet]
+1true
+
+=== RETETA CONFORM PREFERINTELOR ===
+Preparat: cartofi_prajiti
+Timp de preparare: 25 minute | Dificultate: usor
+Ingrediente pe care trebuie sa le cumperi (3): [cartofi, ulei_masline, sare]
+2true
+
+=== RETETA CONFORM PREFERINTELOR ===
+Preparat: orez_cu_legume
+Timp de preparare: 30 minute | Dificultate: usor
+Ingrediente pe care trebuie sa le cumperi (4): [orez, morcovi, ceapa, ulei_masline]
+3true
+
+--- TEST 5: Recomandare bazată pe un ingredient principal (Somon) ---
+Interogare: ?- recomanda_reteta([somon], Reteta).
+
+=== RECOMANDARE ===
+Reteta: somon_la_gratar
+Numar ingrediente lipsa: 3
+Trebuie sa mai adaugi: [lamai, ulei_masline, sare]
+Reteta = somon_la_gratar
+
+=== RECOMANDARE ===
+Reteta: cartofi_prajiti
+Numar ingrediente lipsa: 3
+Trebuie sa mai adaugi: [cartofi, ulei_masline, sare]
+Reteta = cartofi_prajiti
+
+=== RECOMANDARE ===
+Reteta: omleta_simpla
+Numar ingrediente lipsa: 4
+Trebuie sa mai adaugi: [oua, sare, piper, unt]
+Reteta = omleta_simpla
+
+=== RECOMANDARE ===
+Reteta: omleta_cu_branza
+Numar ingrediente lipsa: 4
+Trebuie sa mai adaugi: [oua, cascaval, unt, sare]
+Reteta = omleta_cu_branza
+
+--- TEST 6: Cazul Limită (Preferințe Imposibile) ---
+Descriere: Testăm robustețea sistemului când i se cere o combinație absurdă care nu există în baza de date.
+Interogare:?- recomanda_reteta_cu_preferinte([pui, faina], desert, vegan, 10, usor).
+! ATENTIE: Nu s-a gasit nicio reteta care sa respecte toate aceste filtre.
+true
+
+--- TEST 7: Tratarea Cazurilor Speciale - Excluderea unui ingredient alergen (Fără lactoză) ---
+Descriere: Testăm predicatul de excludere. Avem ingrediente pentru clătite, dar vrem să excludem laptele.
+Interogare: ?-recomanda_fara_ingrediente([oua, faina, zahar], [lapte]).
+
+=== RECOMANDARE (FARA INGREDIENTELE NEDORITE) ===
+Preparat: omleta_simpla
+Ingrediente pe care trebuie sa le cumperi (3): [sare, piper, unt]
+true
+
+=== RECOMANDARE (FARA INGREDIENTELE NEDORITE) ===
+Preparat: omleta_cu_branza
+Ingrediente pe care trebuie sa le cumperi (3): [cascaval, unt, sare]
+true
+
+--- TEST 8: Tratarea Cazurilor Speciale - Excluderea mai multor ingrediente (Fără carne) ---
+Descriere: Excludem simultan toate tipurile principale de carne forțând un meniu bazat pe legume/paste.
+Interogare: ?-recomanda_fara_ingrediente([paste, rosii, usturoi], [pui, vita, porc, somon]).
+
+=== RECOMANDARE (FARA INGREDIENTELE NEDORITE) ===
+Preparat: paste_cu_sos_rosii
+Ingrediente pe care trebuie sa le cumperi (3): [ulei_masline, busuioc, sare]
+true
+
+--- TEST 9: Cazul Limită Suprem pentru Excluderi ---
+Descriere: Utilizatorul exclude cele mai comune ingrediente din baza de date, lăsând sistemul fără opțiuni.
+Interogare: ?-recomanda_fara_ingrediente([mere], [sare, ulei_masline, oua, unt, lapte]).
+! ATENTIE: Nu s-a gasit nicio reteta care sa nu contina acele ingrediente.
+true
+========================================================================
+SFÂRȘIT DOCUMENT TESTE
+========================================================================
+
