@@ -44,7 +44,3 @@ Elimină automat din căutare orice rețetă care conține ingrediente din lista
 
 ---
 
-## Cum se rulează proiectul
-1. Descărcați mediul [SWI-Prolog](https://www.swi-prolog.org/Download.html).
-2. Deschideți fișierul `prima_parte.pl` (sau încărcați-l în consolă folosind comanda `consult('prima_parte.pl').`).
-3. Testați predicatele scriind interogările direct în terminal. Nu uitați punctul `.` la finalul fiecărei comenzi! Pentru a vizualiza următoarea recomandare (backtracking), apăsați tasta `;` (punct și virgulă).
