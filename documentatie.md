@@ -1,5 +1,15 @@
 # Sistem Expert pentru Recomandări Culinare
 
+**Echipa de proiect:**
+* Moroșanu Răzvan
+* Neculcea Sabin
+* Panainte Bogdan
+* Pricop Andrei
+
+**Link GitHub:** [Sistem Expert - Recomandare Rețetă Culinară](https://github.com/mororazvan04/Sistem-Expert---Recomandare-Reteta-Culinara)
+
+---
+
 Acest depozit conține implementarea și documentația unui sistem expert decizional scris în Prolog. Scopul principal al aplicației este de a asista utilizatorii în selectarea optimă a rețetelor culinare, pornind strict de la ingredientele disponibile în propriul stoc. 
 
 Proiectul abordează o problemă reală (reducerea risipei alimentare și eficientizarea resurselor) printr-o abordare pur declarativă, demonstrând utilitatea programării logice în problemele de tip *matching* și optimizare.
@@ -13,7 +23,7 @@ Spre deosebire de limbajele procedurale, în Prolog am modelat problema definind
 ### 1.1 Reprezentarea Cunoștințelor
 * **Vocabularul sistemului:** Am declarat 35 de ingrediente de bază ca entități atomice (ex: `ingredient(rosii).`).
 * **Structura rețetelor:** Am definit 15 preparate. Decizia arhitecturală cheie a fost modelarea ingredientelor necesare sub formă de **liste** (`[oua, faina, lapte]`). Această abordare ne-a permis să folosim funcții native de manipulare a listelor în motorul de inferență.
-* **Metadatele:** Pentru a permite căutări granulare, fiecare rețetă a fost adnotată cu fapte suplimentare care descriu: categoria mesei, timpul de execuție, gradul de dificultate și restricțiile dietetice.
+* **Metadate:** Pentru a permite căutări granulare, fiecare rețetă a fost adnotată cu fapte suplimentare care descriu: categoria mesei, timpul de execuție, nivelul de dificultate și restricțiile dietetice.
 
 ### 1.2 Motorul de Inferență (Logica Decizională)
 Sistemul nu doar caută o potrivire, ci **optimizează** rezultatul. Pentru a face acest lucru, combină trei mecanisme fundamentale din Prolog:
@@ -55,22 +65,10 @@ Aplicația poate fi testată interactiv, direct în browser, fără instalare.
 
 ## 4. Validare și Scenarii de Testare
 
-Sistemul a fost testat riguros împotriva cazurilor de utilizare complexe și a excepțiilor. Mai jos regăsiți o selecție a testelor validate:
+Sistemul a fost validat prin scenarii de testare ce acoperă cazuri ideale, cazuri cu filtre multiple și cazuri limită (fără soluții disponibile). Log-ul detaliat al acestor teste se regăsește în directorul `/teste`.
 
-**Test 1: Meniu strict Vegan, constrâns de timp**
-> *Cerință:* Prânz vegan, sub 30 de minute, având doar câteva legume.
-`?- recomanda_reteta_cu_preferinte([rosii, castraveti, ardei], pranz, vegan, 30, oricare).`
-*Rezultat validat:* Sistemul ignoră rețetele cu carne/lactate și propune `salata_de_vara` (2 ingrediente lipsă) și `cartofi_prajiti` (3 ingrediente lipsă).
-
-**Test 2: Excluderea alergenilor pe un stoc bogat**
-> *Cerință:* Vrem paste, dar eliminăm complet orice fel de carne.
+Exemplu de interogare pentru excluderea alergenilor:
 `?- recomanda_fara_ingrediente([paste, rosii, usturoi], [pui, vita, porc, somon]).`
-*Rezultat validat:* Rețeta `paste_carbonara` este exclusă cu succes. Sistemul recomandă `paste_cu_sos_rosii`.
-
-**Test 3: Robustețe la input imposibil**
-> *Cerință:* Căutăm un desert vegan, care să conțină carne de pui, gata în 5 minute.
-`?- recomanda_reteta_cu_preferinte([pui], desert, vegan, 5, oricare).`
-*Rezultat validat:* Sistemul nu generează erori tehnice, ci gestionează excepția elegant: `! ATENTIE: Nu s-a gasit nicio reteta care sa respecte aceste filtre.`
 
 ---
 
