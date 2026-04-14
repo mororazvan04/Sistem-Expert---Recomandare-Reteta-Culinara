@@ -1,6 +1,4 @@
 # Sistem Expert pentru Recomandări Culinare
-** Tema 7**
-
 Acest proiect implementează un sistem expert bazat pe reguli în limbajul Prolog, destinat optimizării procesului de selecție a rețetelor culinare în funcție de resursele disponibile. Sistemul evaluează un inventar de ingrediente și oferă soluții personalizate, prioritizând rețetele care necesită cele mai puține achiziții suplimentare.
 
 ---
