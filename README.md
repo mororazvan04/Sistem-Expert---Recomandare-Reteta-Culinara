@@ -15,7 +15,7 @@ Proiectul este conceput pentru a fi rulat interactiv folosind platforma SWISH, *
 
 **Pași de rulare:**
 1. Accesează [SWISH Prolog](https://swish.swi-prolog.org/) și creează un document nou din meniul de sus: `File > New > Notebook`.
-2. Adaugă o celulă de tip **Program** (apăsând butonul `+ Program`) și copiază acolo tot codul sursă din fișierul `prima_parte.pl`.
+2. Adaugă o celulă de tip **Program** (apăsând butonul `+ Program`) și copiază acolo tot codul sursă din fișierul `proiect_prolog.pl`.
 3. Adaugă o celulă de tip **Query** (apăsând butonul `+ Query`) pentru a introduce comenzile de căutare.
 4. Apasă butonul albastru de rulare (**Play**) de lângă celula Query. 
 5. Pentru a cere sistemului următoarea recomandare disponibilă (backtracking), apasă pur și simplu pe butonul **"Next"**.
