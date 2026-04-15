@@ -10,7 +10,7 @@
 
 ---
 
-Acest depozit conține implementarea și documentația unui sistem expert decizional scris în Prolog. Scopul principal al aplicației este de a asista utilizatorii în selectarea optimă a rețetelor culinare, pornind strict de la ingredientele disponibile în propriul stoc. 
+Scopul principal al aplicației este de a asista utilizatorii în selectarea optimă a rețetelor culinare, pornind strict de la ingredientele disponibile în propriul stoc. 
 
 Proiectul abordează o problemă reală (reducerea risipei alimentare și eficientizarea resurselor) printr-o abordare pur declarativă, demonstrând utilitatea programării logice în problemele de tip *matching* și optimizare.
 
